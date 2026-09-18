@@ -2413,7 +2413,10 @@
       const MUSIC_VOLUME = 0.28;
       bgMusic.volume = 0;
       bgMusic.loop = true;
+      bgMusic.preload = "auto";
+      bgMusic.muted = true;
       let musicFadeFrame;
+      let introMusicPrimed = false;
       function setMusicUI(playing) {
         $("#bg").classList.toggle("on", playing);
         $("#heroMusic").textContent = playing
@@ -2431,18 +2434,26 @@
         musicFadeFrame = requestAnimationFrame(fade);
       }
       function startIntroMusic() {
-        if (!bgMusic.paused) return;
+        const beginFade = () => {
+          bgMusic.muted = false;
+          setMusicUI(true);
+          fadeInMusic();
+        };
+        if (introMusicPrimed || !bgMusic.paused) {
+          beginFade();
+          return;
+        }
+        bgMusic.muted = true;
         bgMusic.volume = 0;
-        bgMusic
-          .play()
-          .then(() => {
-            setMusicUI(true);
-            fadeInMusic();
-          })
-          .catch(() => {
-            document.addEventListener("pointerdown", startIntroMusic, { once: true });
-          });
+        bgMusic.play().then(() => {
+          introMusicPrimed = true;
+          beginFade();
+        }).catch(() => {
+          document.addEventListener("pointerdown", startIntroMusic, { once: true });
+        });
       }
+      // Muted media is allowed to start in more browsers, so it is ready for the intro fade.
+      bgMusic.play().then(() => { introMusicPrimed = true; }).catch(() => {});
       function burst(x = innerWidth / 2, y = innerHeight / 2, n = 12) {
         for (let i = 0; i < n; i++) {
           let e = document.createElement("i");
@@ -2592,6 +2603,7 @@
       function toggleBg() {
         if (bgMusic.paused) {
           cancelAnimationFrame(musicFadeFrame);
+          bgMusic.muted = false;
           bgMusic.volume = MUSIC_VOLUME;
           bgMusic
             .play()
