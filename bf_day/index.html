@@ -1215,6 +1215,133 @@
         font-style: normal;
         letter-spacing: 0.09em;
       }
+      .about-him {
+        margin-top: 20px;
+        padding-top: 18px;
+        border-top: 1px solid #ffffff22;
+      }
+      .him-profile {
+        display: grid;
+        grid-template-columns: 108px 1fr;
+        gap: 15px;
+        align-items: center;
+      }
+      .him-photo {
+        position: relative;
+        aspect-ratio: 0.82;
+        overflow: hidden;
+        border: 2px solid #fff;
+        border-radius: 14px;
+        background: linear-gradient(145deg, var(--red), var(--blue));
+        box-shadow: 5px 5px var(--red);
+        transform: rotate(-2deg);
+      }
+      .him-photo::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(145deg, #ffffff26, transparent 46%);
+        pointer-events: none;
+      }
+      .him-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .him-photo span {
+        position: absolute;
+        z-index: 1;
+        right: 5px;
+        bottom: 5px;
+        left: 5px;
+        padding: 4px;
+        border-radius: 5px;
+        background: #08090db8;
+        color: #fff;
+        font-size: 0.45rem;
+        font-weight: 700;
+        letter-spacing: 0.09em;
+        text-align: center;
+      }
+      .facts-copy p {
+        margin: 0 0 5px;
+        color: var(--pink);
+        font-size: 0.56rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+      }
+      .facts-copy h3 {
+        margin: 0 0 6px;
+        color: #fff;
+        font: 2.4rem/0.82 Bebas Neue;
+        text-shadow: 2px 2px var(--deep);
+      }
+      .facts-copy > span {
+        color: #c9cfdf;
+        font-size: 0.72rem;
+        line-height: 1.4;
+      }
+      .fact-card {
+        margin-top: 16px;
+        padding: 15px;
+        border: 1px solid #ffffff33;
+        border-radius: 15px;
+        background: linear-gradient(135deg, #ffffff18, #e21b2d1a);
+        box-shadow: inset 0 1px #fff3;
+      }
+      .fact-number {
+        color: var(--pink);
+        font-size: 0.64rem;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+      }
+      .fact-card p {
+        min-height: 43px;
+        margin: 7px 0 12px;
+        color: #fff;
+        font: 1.05rem/1.4 "DM Sans";
+      }
+      .fact-actions {
+        display: grid;
+        grid-template-columns: 36px 1fr 36px;
+        gap: 10px;
+        align-items: center;
+      }
+      .fact-arrow {
+        width: 36px;
+        height: 32px;
+        border: 1px solid #ffffff4d;
+        border-radius: 9px;
+        background: #ffffff12;
+        color: #fff;
+        cursor: pointer;
+        transition: 0.2s ease;
+      }
+      .fact-arrow:hover {
+        transform: translateY(-2px);
+        background: var(--red);
+      }
+      .fact-dots {
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+      }
+      .fact-dots button {
+        width: 6px;
+        height: 6px;
+        padding: 0;
+        border: 0;
+        border-radius: 50%;
+        background: #ffffff44;
+        cursor: pointer;
+        transition: 0.22s ease;
+      }
+      .fact-dots button.active {
+        width: 18px;
+        border-radius: 99px;
+        background: var(--pink);
+        box-shadow: 0 0 8px #f39aaf99;
+      }
       @keyframes albumWebSpin {
         to { transform: rotate(360deg); }
       }
@@ -1894,6 +2021,9 @@
           grid-template-columns: 1fr 1fr;
           grid-auto-rows: 175px;
           gap: 10px;
+          max-width: 520px;
+          margin-inline: auto;
+          justify-content: center;
         }
         .panel {
           position: relative !important;
@@ -1902,6 +2032,10 @@
           height: auto !important;
           grid-column: span 1 !important;
           grid-row: span 1 !important;
+        }
+        .panel,
+        .panel.on {
+          transform: none !important;
         }
         .p3,
         .p5 {
@@ -1919,6 +2053,12 @@
         .controls {
           padding: 22px 18px;
           border-radius: 16px;
+        }
+        .him-profile {
+          grid-template-columns: 96px minmax(0, 1fr);
+        }
+        .facts-copy h3 {
+          font-size: 2.15rem;
         }
         .arcade {
           grid-template-columns: 1fr;
@@ -2048,6 +2188,19 @@
         }
         .controls {
           padding: 20px 14px;
+        }
+        .him-profile {
+          grid-template-columns: 88px minmax(0, 1fr);
+          gap: 12px;
+        }
+        .facts-copy h3 {
+          font-size: 1.95rem;
+        }
+        .fact-card {
+          padding: 13px;
+        }
+        .fact-card p {
+          font-size: 0.94rem;
         }
         .track-title {
           font-size: 2.7rem;
@@ -2188,7 +2341,7 @@
           <div class="album">
             <img
               id="cover"
-              src="assets/music-cover.jpg"
+              src="assets/album.jpg"
               alt="Album artwork"
             /><b>♠</b>
           </div>
@@ -2197,7 +2350,7 @@
               <p class="now">NOW PLAYING</p>
               <span class="web-hq">WEB HQ</span>
             </div>
-            <div class="track-title" id="songTitle">Our First Song</div>
+            <div class="track-title" id="songTitle">Our Song</div>
             <div class="artist" id="songArtist">Replace with artist</div>
             <input
               class="seek"
@@ -2228,8 +2381,28 @@
                 step=".05"
                 value=".7"
             /></label>
-            <div class="playlist-title"><span>UP NEXT</span><i>YOUR MULTIVERSE MIX</i></div>
-            <div id="playlist"></div>
+            <section class="about-him" aria-labelledby="factsTitle">
+              <div class="him-profile">
+                <div class="him-photo">
+                  <img id="himPhoto" src="assets/photo1.jpg" alt="A favorite photo of him" />
+                  <span>MY FAVORITE PERSON</span>
+                </div>
+                <div class="facts-copy">
+                  <p>THE PETER TO MY MJ</p>
+                  <h3 id="factsTitle">10 Facts<br />About You</h3>
+                  <span>Tap through the little things I adore.</span>
+                </div>
+              </div>
+              <div class="fact-card" id="factCard">
+                <span class="fact-number" id="factNumber">01 / 10</span>
+                <p id="factText"></p>
+                <div class="fact-actions">
+                  <button class="fact-arrow" id="factPrev" aria-label="Previous fact">&larr;</button>
+                  <div class="fact-dots" id="factDots" aria-label="Fact navigation"></div>
+                  <button class="fact-arrow" id="factNext" aria-label="Next fact">&rarr;</button>
+                </div>
+              </div>
+            </section>
           </div>
         </div>
       </section>
@@ -2351,7 +2524,8 @@
           "assets/photo7.jpg",
           "assets/photo8.jpg",
         ],
-        musicCover: "assets/music-cover.jpg",
+        himPhoto: "assets/photo1.jpg", // replace this with one dedicated photo of him
+        musicCover: "assets/album.jpg",
         backgroundMusic: "assets/song/sunflower.mp3",
         songs: [
           "assets/song/daylight.mp3",
@@ -2406,6 +2580,19 @@
           artist: "Replace with artist",
           src: ASSETS.songs[3],
         },
+      ];
+      // ===================================== 10 FACTS ABOUT HIM — EDIT THESE LINES =====================================
+      const himFacts = [
+        "Your smile can make even an ordinary day feel special.",
+        "You make me laugh when I need it the most.",
+        "You have a way of making people around you feel safe.",
+        "Your little habits are some of my favorite things.",
+        "You are stronger than you give yourself credit for.",
+        "Being with you makes the simplest moments feel like memories.",
+        "You make my world feel warmer just by being in it.",
+        "You are my favorite person to tell random stories to.",
+        "You make love feel easy, honest, and comforting.",
+        "Out of everyone, I am so glad I get to choose you.",
       ];
       const $ = (s) => document.querySelector(s),
         $$ = (s) => document.querySelectorAll(s);
@@ -2694,24 +2881,34 @@
             ":" +
             String(Math.floor(n % 60)).padStart(2, "0")
           : "00:00";
-      function renderList() {
-        $("#playlist").innerHTML = songs
-          .map(
-            (s, i) =>
-              `<button class="track ${i === ix ? "active" : ""}" data-i="${i}">${String(i + 1).padStart(2, "0")} · ${s.title}<span>${i === ix ? "THWIP!" : ""}</span></button>`,
-          )
+      let factIndex = 0;
+      function renderFact() {
+        $("#factText").textContent = himFacts[factIndex];
+        $("#factNumber").textContent = `${String(factIndex + 1).padStart(2, "0")} / ${String(himFacts.length).padStart(2, "0")}`;
+        $("#factDots").innerHTML = himFacts
+          .map((_, i) => `<button class="${i === factIndex ? "active" : ""}" data-fact="${i}" aria-label="Show fact ${i + 1}"></button>`)
           .join("");
-        $$(".track").forEach(
-          (t) =>
-            (t.onclick = () => {
-              load(+t.dataset.i);
-              play();
-            }),
-        );
+        $$("#factDots button").forEach((dot) => {
+          dot.onclick = () => {
+            factIndex = +dot.dataset.fact;
+            renderFact();
+          };
+        });
       }
+      $("#himPhoto").src = ASSETS.himPhoto;
+      $("#himPhoto").onerror = (e) => e.currentTarget.style.opacity = 0;
+      $("#factPrev").onclick = () => {
+        factIndex = (factIndex - 1 + himFacts.length) % himFacts.length;
+        renderFact();
+      };
+      $("#factNext").onclick = () => {
+        factIndex = (factIndex + 1) % himFacts.length;
+        renderFact();
+      };
+      renderFact();
       function load(i) {
         audio.pause();
-        ix = (i + 4) % 4;
+        ix = (i + songs.length) % songs.length;
         audio = new Audio(songs[ix].src);
         audio.volume = $("#volume").value;
         $("#songTitle").textContent = songs[ix].title;
@@ -2727,7 +2924,6 @@
           }
         };
         audio.onended = () => load(ix + 1);
-        renderList();
       }
       function play() {
         if (audio.paused) {
